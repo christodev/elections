@@ -1,0 +1,26 @@
+﻿@model User
+ 
+@{
+    <h1>Sign Up</h1>
+
+    <form method="post" asp-action="SignUp">
+
+        <label asp-for="UserName">Username:</label>
+        <input type="text" id="UserName" asp-for="UserName" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+
+        <label asp-for="Password">Password:</label>
+        <input type="password" id="Password" asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <label asp-for="Email">Email:</label>
+        <input type="text" id="Email" asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+
+        <p class="text-danger">@ViewData["Error"]</p>
+
+        <button type="submit">Submit</button>
+
+        <p>Already have an account, <a asp-action="SignIn">Sign in</a> here!</p>
+    </form>
+}

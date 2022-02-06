@@ -1,0 +1,25 @@
+﻿@model User
+
+@{
+    <h1>Sign In</h1>
+
+    //C#
+    var ReturnUrl = Context.Request.Query["ReturnUrl"];
+    //End C#
+    <form method="post" asp-action="SignIn" asp-route-ReturnUrl=@ReturnUrl>
+
+        <label asp-for="Email">Email:</label>
+        <input type="text" id="Email" asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+
+        <label asp-for="Password">Password:</label>
+        <input type="password" id="Password" asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <p class="text-danger">@ViewData["Error"]</p>
+
+        <button type="submit">Submit</button>
+
+        <p>Don't have an account, <a asp-action="SignUp">Create one</a> here!</p>
+    </form>
+}

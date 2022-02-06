@@ -1,0 +1,64 @@
+﻿@model List<ElectoralList>;
+
+@*<h1>Here you will Cast your Vote for one of the Electoral Lists</h1>*@
+
+<h1>@ViewData["Error"]</h1>
+
+<div class="elec-lists-cards-container">
+
+    @foreach (var list in Model)
+    {
+        <div class="card" style="width: 18rem; display: inline-block">
+            <img class="card-img-top" src="~/images/electoral-roll.png" asp-append-version="true">
+            <div class="card-body">
+                <h5 class="card-title">@list.Name</h5>
+                @*<button class="btn btn-info" onclick="Vote(`@list.Name`)">Vote</button>*@
+                <form asp-action="Vote" method="post">
+                    <input type="text" hidden name="name" value="@list.Name" />
+                    <button class="btn btn-info" @ViewData["disabled"]>Vote</button>
+                </form>
+                <h5 class="card-text">@list.NbOfVotes</h5>
+            </div>
+        </div>
+    }
+
+</div>
+    
+<script>
+    function Vote(listcharmouta) {
+        //console.log("voted-out", list);
+
+        let body_data = {
+            "list": listcharmouta
+        };
+
+        //$.ajax({
+        //    type: 'POST',
+        //    url: '/user/vote',
+        //    contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+        //    data: body_data,
+        //    success: function (result) {
+        //        alert('Successfully received Data ');
+        //    },
+        //    error: function () {
+        //        alert('Failed to receive the Data');
+        //        console.log('Failed ');
+        //    }
+        //});
+
+        fetch('https://localhost:44395/User/Vote',
+            {
+                method: "POST",
+                body: JSON.stringify(
+                    body_data
+                ),
+
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then( _ => {
+                console.log("voted", listcharmouta);
+            })
+    }
+</script>

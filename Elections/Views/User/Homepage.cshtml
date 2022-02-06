@@ -1,0 +1,92 @@
+﻿@using Elections.Repositories;
+@using Elections.Models; 
+
+<style>
+    .slide-image {
+        width: 100%;
+    }
+
+    .carousel-container{
+        width:60%;
+        height:400px;
+        margin:0 auto 2px auto;
+    }
+
+    .ci-container{
+        height:400px;
+    }
+
+ 
+
+</style>
+
+<h3>Explore the candidates/political parties that might meet the requirements to build up THE Lebanon you dream of.</h3>
+
+<div id="cards">
+    @* Here we will display the electoral lists *@
+
+    @{
+//var electoralLists = ViewData["ElectoralLists"] as List<PoliticalParty>; //Using ViewData instead of "model" and "Model"
+
+@model List<PoliticalParty>;
+    var firstList = Model[0];
+
+    }
+</div>
+
+<div id="carousel" class="carousel-container">
+    <div id="political-parties" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#political-parties" data-slide-to="0" class="active"></li>
+            @for (int i = 1; i < Model.Count; i++)
+            {
+                <li data-target="#political-parties" data-slide-to="@i"></li>
+            }
+        </ol>
+
+        <div class="carousel-inner modal-dialog-centered ci-container">
+
+            @* First element of the Carousel *@
+            <div class="carousel-item active text-center">
+                <a asp-action="PoliticalParty/@firstList.Identifier">  
+                    <img class="d-block w-100 slide-image" src="~/images/@firstList.ImageURL" alt="@firstList.Name" asp-append-version="true">
+                </a>
+</div>
+
+            @for (int i = 1; i < Model.Count; i++)
+            {
+                <div class="carousel-item">
+                    <a asp-action="PoliticalParty/@Model[i].Identifier">
+                        <img class="d-block w-100 slide-image" src="~/images/@Model[i].ImageURL" alt="@Model[i].Name" asp-append-version="true">
+                    </a>
+                </div>
+            }
+        </div>
+
+        @* carousel prev btn *@
+        <a class="carousel-control-prev" href="#political-parties" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+
+        @* carousel next btn *@
+        <a class="carousel-control-next" href="#political-parties" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+</div> @*end div#carousel*@
+
+<br />
+
+<div id="footer">
+    <div class="card" style="width: 18rem; display: inline-block">
+        @*<img class="card-img-top" src="~/images/@list.ImageURL" asp-append-version="true">*@
+        <div class="card-body">
+            <h5 class="card-title">News</h5>
+            <p class="card-text">Check the latest news about the elections!</p>
+            <a asp-action="" class="btn btn-info">Go to News</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Here we will change Lebanon!</h1>
+    <h1>Here we have: @ViewData["Message"]</h1>
+</div>
+
+<script>
+
+    window.onload = function() {
+        console.log("fet bel onload");
+        /*Function to execute many times*/
+        setInterval(_ => {
+
+            console.log(`@ViewData["Message"]`)
+            if (`@ViewData["Message"]` != "") {
+                DisplayAlert(`@ViewData["Message"]`);
+                @*clearInterval();*@
+            }
+
+        }, 1000);
+    };
+
+    function DisplayAlert(string)
+    {
+        alert(string);
+    }
+
+</script>

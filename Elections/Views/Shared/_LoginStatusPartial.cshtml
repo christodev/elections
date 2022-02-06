@@ -1,0 +1,18 @@
+﻿@{
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form method="post" class="form-inline" asp-controller="Authentication" asp-action="SignOut">
+            Welcome @User.Claims.SingleOrDefault(c => c.Type == "UserName").Value
+            <button type="submit" class="ml-2 btn btn-link">Sign Out</button>
+        </form>
+    }
+    else
+    {
+        if (Url.ActionContext.ActionDescriptor.DisplayName.Contains("Sign"))
+        {
+            return;
+        }
+
+        <a class="btn btn-link" asp-controller="Authentication" asp-action="SignIn">Sign In</a>
+    }
+}

@@ -1,0 +1,24 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Elections/Controllers/AuthenticationController.cs">
+    <Files>
+      <File FileName="Elections/Views/Authentication/SignIn.cshtml" Line="24" Column="12" />
+      <File FileName="Elections/appsettings.Development.json" />
+      <File FileName="Elections/Program.cs" />
+      <File FileName="Elections/Startup.cs" />
+      <File FileName="Elections/Controllers/AuthenticationController.cs" Line="16" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Elections" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
