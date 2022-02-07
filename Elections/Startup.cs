@@ -33,7 +33,7 @@ namespace Elections
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(cookieAuthOptions => {
                     cookieAuthOptions.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Authentication/Signin");
-                    }
+                }
                 );
 
             services.AddAuthorization();

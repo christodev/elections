@@ -7,6 +7,6 @@ namespace Elections.Models.VotingTimeObserverPattern
 
         void Unsubscribe(IObserver observer);
 
-        void Notify();
+        void NotifyAllObservers();
     }
 }

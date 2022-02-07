@@ -3,9 +3,9 @@ using Elections.Exceptions;
 using Elections.Models.UserCommandPattern;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Elections.Repositories
 {
@@ -15,7 +15,6 @@ namespace Elections.Repositories
         private IUserCommand disableVotingCommand; //Command to Execute
 
         private VotingManager votingManager; //Invoker
-
 
         //to employ command pattern to add edit users..
         Dictionary<int, User> UsersList = new Dictionary<int, User>()
@@ -29,8 +28,8 @@ namespace Elections.Repositories
         //Else throw exception
         public User AddIfNewUser(User user)
         {
-            //Verify if UserName is already taken
-            var alreadyExistingUser = UsersList.Values.Any(u => u.UserName == user.UserName);
+            //Verify if UserName or Email is already taken
+            var alreadyExistingUser = UsersList.Values.Any(u => u.UserName == user.UserName || u.Email == u.Email);
 
             //If no user exists with such Username
             if(alreadyExistingUser != true)

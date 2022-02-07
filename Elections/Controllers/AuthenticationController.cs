@@ -1,18 +1,17 @@
-﻿using Elections.Exceptions;
-using Elections.Models;
+﻿using Elections.Models;
+using Elections.Exceptions;
 using Elections.Repositories;
 
 using Microsoft.AspNetCore.Mvc;
-
-using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Elections.Controllers
 {
@@ -45,21 +44,12 @@ namespace Elections.Controllers
                 {
                     //Add User to DB (If Username already taken => throws Exception)
                     User tempUser = UserRepository.AddIfNewUser(user);
-
-                    //Authenticate User
-                    //AuthenticateUserAsync(tempUser).ContinueWith<IActionResult>(t =>
-                    //    //return to user home page -- Returns to Homepage.cshtml view
-                    //    RedirectToAction("Homepage", "User"))
-                    //    .;
                     
                     //Authenticate User
                     AuthenticateUserAsync(tempUser);
 
                     //return to home page -- Returns to Index.cshtml view
                     return RedirectToAction("Index", "Home");
-
-                    ////else
-                    //throw new Exception("Unexpected Error Occured");
                 }
                 //If Username taken exception thrown => Display Error
                 catch(FailedToSignInException)
@@ -168,7 +158,16 @@ namespace Elections.Controllers
             var ClaimsPrincipal = new ClaimsPrincipal(ClaimsIdentity);
 
             //Sign in User Officially
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, ClaimsPrincipal);
+            //var authProperties = new AuthenticationProperties()
+            //{
+            //    IsPersistent = false
+            //};
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                ClaimsPrincipal, new AuthenticationProperties()
+                {
+                    IsPersistent = false
+                });
         }
         #endregion
     }

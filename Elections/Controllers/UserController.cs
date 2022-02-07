@@ -30,6 +30,11 @@ namespace Elections.Controllers
 
         VotingPermission votingPermission = new VotingPermission();
 
+        IResultsCalculator resultsCalculator = new ProxyResultsCalculator();
+
+        DateTime DEADLINE = new DateTime(2022, 2, 7, 15, 14, 00);
+
+        bool redirect;
         //bool var to indicate if voting's deadline is reached
         //private bool timeIsUp;
         #endregion ConfusedAboutVotingDeadlineImplementation
@@ -40,6 +45,19 @@ namespace Elections.Controllers
             politicalPartyRepository = _politicalPartyRepository;
             electoralListRepository = _electoralListRepository;
             userRepository = _userRepository;
+
+            //Let Results Calc keep Watching for Elections Deadline
+            votingPermission.Subscribe(resultsCalculator);
+
+            //Check if Voting Closed, Display Results
+            //Check if Voting Deadline has been reached
+            //If yes
+            if (DateTime.Now > DEADLINE)
+            {
+                //Notify Calculator to start Calculating
+                votingPermission.VotingIsOpen = false;
+                redirect = true;
+            }
         }
 
         [HttpGet]
@@ -77,12 +95,24 @@ namespace Elections.Controllers
         [HttpGet("Vote")]
         public IActionResult IncrementVotes_View(string listName)
         {
+            if (redirect)
+                return RedirectToAction("Results");
 
             List<ElectoralList> els = electoralListRepository.GetElectoralLists();
 
             try
             {
+                //SETTING DEFAULT VALUES
                 ViewData["disabled"] = "";
+
+                //Check if Voting Deadline has been reached
+                //If yes
+                if (DateTime.Now > DEADLINE)
+                {
+                    //Notify Calculator to start Calculating
+                    votingPermission.VotingIsOpen = false;
+                }
+
                 if (!votingPermission.VotingIsOpen || SignedInUser.Instance.Voted)
                     ViewData["disabled"] = "disabled";
 
@@ -116,6 +146,22 @@ namespace Elections.Controllers
 
             return IncrementVotes_View(electoralListName);
             //return Ok(list);
+        }
+
+        //Method to Display Election Results
+        [HttpGet("Results")]
+        [AllowAnonymous]
+        public IActionResult Results() 
+        {
+            //Display Calculation
+            
+            return Ok("Results calculated!");
+        }
+
+        private void RedirectToResults()
+        {
+            if(redirect)
+                RedirectToAction("Results");
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Elections.Controllers
 
         public IActionResult Index()
         {
+            //string test = "Testing logging";
+            //_logger.LogInformation($"Hey I'm {test}");
             return View();
         }
 

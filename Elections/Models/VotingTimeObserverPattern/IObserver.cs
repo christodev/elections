@@ -3,6 +3,6 @@ namespace Elections.Models.VotingTimeObserverPattern
 {
     public interface IObserver
     {
-        void OnDeadlineReached();
+        void OnDeadlineReached_CalculateResults();
     }
 }
