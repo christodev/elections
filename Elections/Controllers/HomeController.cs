@@ -21,11 +21,7 @@ namespace Elections.Controllers
 
         public IActionResult Index()
         {
-            VotingDeadline votingDeadline = new VotingDeadline();
-
-            Console.WriteLine("Commited fourth commit to test pull");
-
-            return View(votingDeadline);
+            return View();
         }
 
         public IActionResult Privacy()
