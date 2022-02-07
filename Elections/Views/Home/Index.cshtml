@@ -2,22 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
+@model bool;
+
 <div class="text-center">
     <h1 class="display-4">Here we will change Lebanon!</h1>
-    <h1>Here we have: @ViewData["Message"]</h1>
+    @if(@Model == false)
+    {
+        <h1>Voting: Open</h1>
+    }
+    else
+    {
+        <h1>Voting: Closed</h1>
+    }
 </div>
 
 <script>
 
     window.onload = function() {
-        console.log("fet bel onload");
+
         /*Function to execute many times*/
         setInterval(_ => {
 
-            console.log(`@ViewData["Message"]`)
-            if (`@ViewData["Message"]` != "") {
-                DisplayAlert(`@ViewData["Message"]`);
-                @*clearInterval();*@
+            //Keep checking for the value of ViewData["Message"]
+            if (`@Model` == true) {
+                DisplayAlert('Deadline Reached');
             }
 
         }, 1000);

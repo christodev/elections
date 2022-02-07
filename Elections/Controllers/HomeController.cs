@@ -19,16 +19,11 @@ namespace Elections.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
             VotingDeadline votingDeadline = new VotingDeadline();
 
-            //to be run async
-            ViewData["Message"] = "";
-            ViewData["Message"] = await votingDeadline.WatchForDeadlineAsync();
-            //ViewData["Message"] = test as string;
-
-            return View();
+            return View(votingDeadline);
         }
 
         public IActionResult Privacy()

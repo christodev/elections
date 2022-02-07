@@ -1,20 +1,30 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Elections/Controllers/AuthenticationController.cs">
+﻿<Properties StartupConfiguration="{69F6A9EC-144C-4DB7-909E-4F3CD04999BB}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Elections/Controllers/HomeController.cs">
     <Files>
-      <File FileName="Elections/Views/Authentication/SignIn.cshtml" Line="24" Column="12" />
-      <File FileName="Elections/appsettings.Development.json" />
-      <File FileName="Elections/Program.cs" />
-      <File FileName="Elections/Startup.cs" />
-      <File FileName="Elections/Controllers/AuthenticationController.cs" Line="16" Column="1" />
+      <File FileName="Elections/Controllers/HomeController.cs" Line="26" Column="41" />
+      <File FileName="Elections/Views/Home/Index.cshtml" Line="9" Column="12" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Elections" expanded="True" selected="True" />
+          <Node name="Elections" expanded="True">
+            <Node name="Elections" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="HomeController.cs" selected="True" />
+              </Node>
+              <Node name="Models" expanded="True">
+                <Node name="VotingTimeObserverPattern" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Elections PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
