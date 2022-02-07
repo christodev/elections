@@ -23,6 +23,8 @@ namespace Elections.Controllers
         {
             VotingDeadline votingDeadline = new VotingDeadline();
 
+            Console.WriteLine("Commited third commit");
+
             return View(votingDeadline);
         }
 
