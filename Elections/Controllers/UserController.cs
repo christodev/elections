@@ -85,7 +85,7 @@ namespace Elections.Controllers
         public IActionResult IncrementVotes_View(string listName)
         {
             if (!votingPermission.VotingIsOpen)
-                return Results();
+                return RedirectToAction("Results");
 
             List<ElectoralList> els = electoralListRepository.GetElectoralLists();
 
@@ -125,7 +125,7 @@ namespace Elections.Controllers
             //Update User Singleton (No Full User with Credentials Exposure)
             SignedInUser.Instance.DisableVoting();
 
-            return IncrementVotes_View(electoralListName);
+            return IncrementVotes_View  (electoralListName);
             //return Ok(list);
         }
 
@@ -136,10 +136,10 @@ namespace Elections.Controllers
         public IActionResult Results()
         {
             if (votingPermission.VotingIsOpen)
-                return IncrementVotes_View(null);
+                return RedirectToAction("IncrementVotes_View", null);
             //Display Calculation
 
-            var list = electoralListRepository.GetElectoralLists()[0];
+            var list = electoralListRepository.GetElectoralLists();
 
             return View(list);
         }

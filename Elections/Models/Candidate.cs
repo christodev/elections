@@ -7,6 +7,12 @@ namespace Elections.Models
 {
     public class Candidate: Contestant
     {
+
+        public string Status { get; set; }
+        public string ImageURL { get; set; }
+
+        public string Description { get; set; }
+
         public ElectoralList ElectoralList { get; set; }
 
         public Candidate()
@@ -27,6 +33,15 @@ namespace Elections.Models
             Name = name;
             NbOfVotes = nbOfVotes;
             ElectoralList = electoralList;
+        }
+
+        public Candidate(int id, string name, int nbOfVotes, string desc, string imageURL)
+        {
+            Id = id;
+            Name = name;
+            NbOfVotes = nbOfVotes;
+            Description = desc;
+            ImageURL = imageURL;
         }
 
 
