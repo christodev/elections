@@ -20,25 +20,15 @@ namespace Elections.Controllers
         private IElectoralListRepository electoralListRepository;
         private IUserRepository userRepository;
 
-        #region ConfusedAboutVotingDeadlineImplementation
-        /*So basically, I don't know whether to put a single boolean var 
-         * to indicate that elections time's up, or put an object to relate it with Observer Pattern
-         * I need to ask my manager if Controllers can be part of Design patterns
-         *
-         * First, I will try with an object
-         * This object will be watching for the end of the Elections (Until time's up)*/
-
+        //Subject that will Notify the ResultsCalculator (observer) when voting is closed
         VotingPermission votingPermission = new VotingPermission();
 
+        //Observer, when notified will calculate the results and return them to be displayed
         IResultsCalculator resultsCalculator = new ProxyResultsCalculator();
 
-        DateTime DEADLINE = new DateTime(2022, 2, 7, 15, 14, 00);
-
-        bool redirect;
-        //bool var to indicate if voting's deadline is reached
-        //private bool timeIsUp;
-        #endregion ConfusedAboutVotingDeadlineImplementation
-        public UserController(IPoliticalPartyRepository _politicalPartyRepository, 
+        readonly DateTime DEADLINE = new DateTime(2022, 2, 8, 15, 14, 00);
+        
+        public UserController(IPoliticalPartyRepository _politicalPartyRepository,
             IElectoralListRepository _electoralListRepository,
             IUserRepository _userRepository)
         {
@@ -54,9 +44,8 @@ namespace Elections.Controllers
             //If yes
             if (DateTime.Now > DEADLINE)
             {
-                //Notify Calculator to start Calculating
+                //Notify Calculator to start Calculating (Internal Notification in the Setter)
                 votingPermission.VotingIsOpen = false;
-                redirect = true;
             }
         }
 
@@ -95,43 +84,36 @@ namespace Elections.Controllers
         [HttpGet("Vote")]
         public IActionResult IncrementVotes_View(string listName)
         {
-            if (redirect)
+            if (!votingPermission.VotingIsOpen)
                 return RedirectToAction("Results");
 
             List<ElectoralList> els = electoralListRepository.GetElectoralLists();
 
             try
             {
-                //SETTING DEFAULT VALUES
+                //SETTING DEFAULT VALUE (Voting Enabled)
                 ViewData["disabled"] = "";
-
-                //Check if Voting Deadline has been reached
-                //If yes
-                if (DateTime.Now > DEADLINE)
-                {
-                    //Notify Calculator to start Calculating
-                    votingPermission.VotingIsOpen = false;
-                }
 
                 if (!votingPermission.VotingIsOpen || SignedInUser.Instance.Voted)
                     ViewData["disabled"] = "disabled";
 
-                //If User has Voted
-                if(listName != null)
+                //If User has Voted and reloading the page
+                if (listName != null)
                     //Show the user he Casted his Vote successfully via label and Disable button for all Lists
-                    ViewData["Error"] = $"Successfully voted to {listName}";
+                    ViewData["VotingResult"] = $"Successfully voted to {listName}";
+
                 //ReDisplay the View
                 return View("Vote", els);
             }
             catch
             {
-                ViewData["Error"] = "Unexpected Error Occured";
+                ViewData["VotingResult"] = "Unexpected Error Occured";
                 return View("Vote");
             }
         }
 
         [HttpPost("Vote")]
-        public IActionResult Increment_Votes([FromForm(Name = "name")]string electoralListName)
+        public IActionResult Increment_Votes([FromForm(Name = "name")] string electoralListName)
         //public IActionResult Increment_Votes(string list)
         {
 
@@ -151,17 +133,11 @@ namespace Elections.Controllers
         //Method to Display Election Results
         [HttpGet("Results")]
         [AllowAnonymous]
-        public IActionResult Results() 
+        public IActionResult Results()
         {
             //Display Calculation
-            
-            return Ok("Results calculated!");
-        }
 
-        private void RedirectToResults()
-        {
-            if(redirect)
-                RedirectToAction("Results");
+            return Ok("Results calculated!");
         }
     }
 }

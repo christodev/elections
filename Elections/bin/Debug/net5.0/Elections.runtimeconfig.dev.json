@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "/Users/kik/.dotnet/store/|arch|/|tfm|",
-      "/Users/kik/.nuget/packages"
+      "C:\\Users\\toshiba\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\toshiba\\.nuget\\packages"
     ]
   }
 }
