@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model ElectoralList
+
+<div class="container">
+    <div class="d-flex flex-column">
+        <h4 class="bg-primary">@Model.Name</h4>
+        @foreach (var cand in Model.Candidates)
+        {
+            <div class="card">
+                <div class="card-body">
+                    Basic Candidate
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

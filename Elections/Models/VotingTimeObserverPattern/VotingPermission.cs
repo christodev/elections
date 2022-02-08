@@ -29,7 +29,7 @@ namespace Elections.Models.VotingTimeObserverPattern
         public VotingPermission()
         {
             //Voting is Open by Default
-            votingIsOpen = false;
+            votingIsOpen = true;
         }
 
         public void NotifyAllObservers()

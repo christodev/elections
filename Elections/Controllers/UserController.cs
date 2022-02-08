@@ -49,6 +49,7 @@ namespace Elections.Controllers
             }
         }
 
+
         [HttpGet]
         public IActionResult Homepage()
         {
@@ -69,7 +70,6 @@ namespace Elections.Controllers
 
         //Action used to View the details of a Political Party
         [HttpGet("PoliticalParty%2F{identifier}")]
-        //public IActionResult PoliticalPartyInformation(string identifier)
         public IActionResult PoliticalParty(string identifier)
         {
             //Retrieve the Electoral List and pass it to the View to display its details
@@ -79,13 +79,13 @@ namespace Elections.Controllers
             return View(politicalParty);
         }
 
+        
         //Action used to Increment the nb of Votes of an Electoral List
-
         [HttpGet("Vote")]
         public IActionResult IncrementVotes_View(string listName)
         {
             if (!votingPermission.VotingIsOpen)
-                return RedirectToAction("Results");
+                return Results();
 
             List<ElectoralList> els = electoralListRepository.GetElectoralLists();
 
@@ -112,11 +112,10 @@ namespace Elections.Controllers
             }
         }
 
+
         [HttpPost("Vote")]
         public IActionResult Increment_Votes([FromForm(Name = "name")] string electoralListName)
-        //public IActionResult Increment_Votes(string list)
         {
-
             //Increase Nb of Votes
             electoralListRepository.IncrementVotes_ForList(electoralListName);
 
@@ -130,14 +129,19 @@ namespace Elections.Controllers
             //return Ok(list);
         }
 
-        //Method to Display Election Results
+
+        //Action to Display Election Results
         [HttpGet("Results")]
         [AllowAnonymous]
         public IActionResult Results()
         {
+            if (votingPermission.VotingIsOpen)
+                return IncrementVotes_View(null);
             //Display Calculation
 
-            return Ok("Results calculated!");
+            var list = electoralListRepository.GetElectoralLists()[0];
+
+            return View(list);
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿<Properties StartupConfiguration="{436B3C70-1F51-4F83-A6A4-96E0A8E0C0C4}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UserController.cs">
     <Files>
-      <File FileName="Controllers/UserController.cs" Line="58" Column="18" />
-      <File FileName="Models/VotingTimeObserverPattern/VotingPermission.cs" />
-      <File FileName="Models/IResultsCalculator.cs" />
-      <File FileName="Models/RealResultsCalculator.cs" />
-      <File FileName="Models/VotingTimeObserverPattern/ProxyResultsCalculator.cs" />
-      <File FileName="Repositories/MockElectoralListRepository.cs" Line="19" Column="1" />
+      <File FileName="Views/User/Results.cshtml" Line="12" Column="33" IsPinned="True" />
+      <File FileName="Controllers/UserController.cs" Line="17" Column="45" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,13 +12,9 @@
               <Node name="Controllers" expanded="True">
                 <Node name="UserController.cs" selected="True" />
               </Node>
-              <Node name="Models" expanded="True">
-                <Node name="VotingTimeObserverPattern" expanded="True" />
-              </Node>
+              <Node name="Models" expanded="True" />
               <Node name="Repositories" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Home" expanded="True" />
-                <Node name="Shared" expanded="True" />
                 <Node name="User" expanded="True" />
               </Node>
             </Node>
@@ -41,9 +33,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/kik/Documents/C#/Elections/Elections/Controllers/UserController.cs" relfile="Controllers/UserController.cs" line="43" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

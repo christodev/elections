@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Elections.Models
 {
-    public class ElectoralList: Candidate
+    public class ElectoralList: Contestant
     {
 
         public List<Candidate> Candidates { get; set; }
@@ -15,14 +15,16 @@ namespace Elections.Models
 
         }
 
-        public ElectoralList(string name, int nbOfVotes)
+        public ElectoralList(int id, string name, int nbOfVotes)
         {
+            Id = id;
             Name = name;
             NbOfVotes = nbOfVotes;
         }
 
-        public ElectoralList(string name, int nbOfVotes, List<Candidate> candidates)
+        public ElectoralList(int id, string name, int nbOfVotes, List<Candidate> candidates)
         {
+            Id = id;
             Name = name;
             NbOfVotes = nbOfVotes;
             Candidates = candidates;
