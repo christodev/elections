@@ -44,24 +44,12 @@ namespace Elections.Models
             EligibleElectoralLists = ElectoralLists.Where(el => el.NbOfVotes < EQ).ToList();
 
             //trying a fast method to calc new nb of voters
+            nbOfVoters = EligibleElectoralLists.Sum(el => el.NbOfVotes);
 
             foreach(var list in ElectoralLists)
             {
                 //By Default all lists are winners, until they don't pass the first EQ check
                 list.Status = Status.Winner;
-
-                //Check which lists don't have seats
-                if(list.NbOfVotes < EQ)
-                {
-                    //Set the status to Loser
-                    list.Status = Status.Loser;
-
-                    //Remove it from the winners list
-                    ElectoralLists.Remove(list);
-
-                    //Remove their votes from the NbOfVoters
-                    nbOfVoters -= list.NbOfVotes;
-                }
             }
 
             //Here we have a fresh NbOfVoters = TotalNbOfVoters - NbOfVotersOfLosingLists
