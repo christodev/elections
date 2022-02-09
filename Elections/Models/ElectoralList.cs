@@ -7,6 +7,7 @@ namespace Elections.Models
 {
     public class ElectoralList: Contestant
     {
+        public int NumberOfSeats { get; set; }
 
         public List<Candidate> Candidates { get; set; }
 
