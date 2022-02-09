@@ -9,6 +9,8 @@ namespace Elections.Models
     {
         public int NumberOfSeats { get; set; }
 
+        public Status Status { get; set; }
+
         public List<Candidate> Candidates { get; set; }
 
         public ElectoralList()
@@ -31,5 +33,11 @@ namespace Elections.Models
             Candidates = candidates;
         }
 
+    }
+
+    public enum Status
+    {
+        Winner,
+        Loser
     }
 }
