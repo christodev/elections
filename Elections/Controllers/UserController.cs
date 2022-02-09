@@ -18,13 +18,13 @@ namespace Elections.Controllers
     {
         private IPoliticalPartyRepository politicalPartyRepository;
         private IElectoralListRepository electoralListRepository;
-        private IUserRepository userRepository;
+        //private IUserRepository userRepository;
 
         //Subject that will Notify the ResultsCalculator (observer) when voting is closed
         VotingPermission votingPermission = new VotingPermission();
 
         //Observer, when notified will calculate the results and return them to be displayed
-        IResultsCalculator resultsCalculator = new ProxyResultsCalculator();
+        IResultsCalculator resultsCalculator;
 
         readonly DateTime DEADLINE = new DateTime(2022, 2, 8, 15, 14, 00);
         
@@ -34,7 +34,7 @@ namespace Elections.Controllers
         {
             politicalPartyRepository = _politicalPartyRepository;
             electoralListRepository = _electoralListRepository;
-            userRepository = _userRepository;
+            //userRepository = _userRepository;
 
             //Let Results Calc keep Watching for Elections Deadline
             votingPermission.Subscribe(resultsCalculator);
@@ -112,28 +112,37 @@ namespace Elections.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Candidates_Vote(ElectoralList list)
-        {
-            return View(list);
-        }
+        //[HttpGet]
+        //public IActionResult Candidates_Vote(ElectoralList list)
+        //{
+        //    return View(list);
+        //}
 
 
         [HttpPost("Vote")]
         public IActionResult Increment_Votes([FromForm(Name = "name")] string electoralListName)
         {
-            //Increase Nb of Votes
-            electoralListRepository.IncrementVotes_ForList(electoralListName);
 
-            //Disallow User from Voting Again
-            userRepository.DisableVoting(SignedInUser.Instance.UserName);
+            //Get the electoral list that the user clicked on
+            var tempElectoralList = electoralListRepository.GetElectoralLists().SingleOrDefault(el => el.Name == electoralListName);
 
-            //Update User Singleton (No Full User with Credentials Exposure)
-            SignedInUser.Instance.DisableVoting();
+            //Display Candidates Voting List
+            return View("Candidates_Vote", tempElectoralList);
 
-            return IncrementVotes_View  (electoralListName);
-            //return Ok(list);
-        } 
+            #region Old
+            ////Increase Nb of Votes
+            //electoralListRepository.IncrementVotes_ForList(electoralListName);
+
+            ////Disallow User from Voting Again
+            //userRepository.DisableVoting(SignedInUser.Instance.UserName);
+
+            ////Update User Singleton (No Full User with Credentials Exposure)
+            //SignedInUser.Instance.DisableVoting();
+
+            //return IncrementVotes_View  (electoralListName);
+            ////return Ok(list);
+            #endregion 
+        }
 
 
         //Action to Display Election Results
@@ -145,9 +154,14 @@ namespace Elections.Controllers
                 return RedirectToAction("IncrementVotes_View", null);
             //Display Calculation
 
-            var list = electoralListRepository.GetElectoralLists();
+            var lists = electoralListRepository.GetElectoralLists();
 
-            return View(list);
+            if (resultsCalculator == null)
+                resultsCalculator = new ProxyResultsCalculator(lists);
+
+            resultsCalculator.CalculateResults();
+
+            return View(lists);
         }
     }
 }

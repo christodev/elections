@@ -44,6 +44,16 @@ namespace Elections.Models
             ImageURL = imageURL;
         }
 
+        public Candidate(int id, string name, int nbOfVotes, string desc, string imageURL, ElectoralList electoralList)
+        {
+            Id = id;
+            Name = name;
+            NbOfVotes = nbOfVotes;
+            Description = desc;
+            ImageURL = imageURL;
+            ElectoralList = electoralList;
+        }
+
 
     }
 }

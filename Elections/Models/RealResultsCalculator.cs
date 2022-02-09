@@ -19,25 +19,27 @@ namespace Elections.Models
         {
             //int nbOfEligibleVoters = 134736;
 
-            int nbOfSeats = 8;
+            int blankVotes = 541;
+
+            int nbOfSeats = 6;
 
             int nbOfVoters = 0;
 
             //1-Calculate initial Total Number of Voters
-            nbOfVoters = ElectoralLists.Sum(el => el.NbOfVotes);
+            nbOfVoters = blankVotes + ElectoralLists.Sum(el => el.NbOfVotes);
 
             //STEP 1 - Filter the winning lists
 
             //2-Calculate the first EQ (Electoral Quotient - الحاصل الانتخابي) -- it will decide which lists continue to the next step
-            int EQ = nbOfVoters / nbOfSeats;
+            double EQ = nbOfVoters / nbOfSeats;
 
             //3-Eliminate the lists that didn't reach the first EQ
             List<ElectoralList> EligibleElectoralLists = new List<ElectoralList>();
 
-            EligibleElectoralLists = ElectoralLists.Where(el => el.NbOfVotes < EQ).ToList();
+            EligibleElectoralLists = ElectoralLists.Where(el => el.NbOfVotes >= EQ).ToList();
 
             //Calculate new nb of voters
-            nbOfVoters = EligibleElectoralLists.Sum(el => el.NbOfVotes);
+            nbOfVoters = blankVotes + EligibleElectoralLists.Sum(el => el.NbOfVotes);
 
             //Fix the status of the lists in the original list of elec lists
             foreach(var list in ElectoralLists)
@@ -65,10 +67,10 @@ namespace Elections.Models
             //START OF WORK WITH CANDIDATES
 
             //Create a list of the Eligible Candidates
-            List<Candidate> EligibleCandidates = (List<Candidate>)EligibleElectoralLists.SelectMany<ElectoralList, Candidate>(el => el.Candidates);
+            List<Candidate> EligibleCandidates = EligibleElectoralLists.SelectMany<ElectoralList, Candidate>(el => el.Candidates).ToList();
 
             //Sort them according to the proportion (DESC)
-            EligibleCandidates.OrderByDescending<Candidate, int>(c => c.NbOfVotes/EQ);
+            EligibleCandidates = EligibleCandidates.OrderByDescending<Candidate, double>(c => c.NbOfVotes/EQ).ToList();
 
             //Choose the Winners (According to the highest pref votes) (Neglect the Religions and the small regions)
             EligibleCandidates.ForEach(c =>

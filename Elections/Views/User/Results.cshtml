@@ -60,22 +60,23 @@
                                 </div>
 
                                 @* Body *@
-                                <div class="card-body w-40">
+                            <div class="card-body w-40">
+                                @if (cand.Status == Status.Winner)
+                                {
+                                    <h5 class="card-title">@cand.Name (Winner)</h5>
+                                }
+                                else
+                                {
                                     <h5 class="card-title">@cand.Name</h5>
-                                    <p class="card-text">Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate</p>
-                                </div>
+                                }
+                                <p class="card-text">Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate</p>
+                            </div>
 
                                 @* Footer *@
                                  @*If Results *@
                                 <div class="card-footer d-flex align-self-end  bg-white border-left">
                                     Votes 1500000
                                 </div>
-                                @* If Voting *@
-                                @*<div class="card-footer d-flex align-self-end bg-white border-0">
-                                    <button type="submit" class="btn-primary">Vote</button>
-                                </div>*@
-                            
-
                             </div>
                         }
                     </div>

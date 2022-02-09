@@ -9,9 +9,11 @@ namespace Elections.Models.VotingTimeObserverPattern
     {
         private RealResultsCalculator realResultsCalculator;
 
-        public ProxyResultsCalculator()
-        {
+        List<ElectoralList> ElectoralLists;
 
+        public ProxyResultsCalculator(List<ElectoralList> lists)
+        {
+            ElectoralLists = lists;
         }
 
         public void CalculateResults()
@@ -20,7 +22,7 @@ namespace Elections.Models.VotingTimeObserverPattern
             {
                 //Check if realResultsCalculator instance is not null
                 if (realResultsCalculator == null)
-                    realResultsCalculator = new RealResultsCalculator();
+                    realResultsCalculator = new RealResultsCalculator(ElectoralLists);
 
                 //Check if Voting Deadline has been reached
                 DateTime DEADLINE = new DateTime(2022, 2, 7, 15, 14, 00);

@@ -1,5 +1,40 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@model ElectoralList 
+
 @{
+    <div class="d-flex">
+        <h4 class="flex-shrink-1" style="margin-left:10px;">@Model.Name</h4>
+    </div>
+    <div class="cards-container">
+        @* Red *@
+        @foreach (var cand in Model.Candidates)
+        {
+            //Here starts the card (We have to divide it into 2 parts)
+            <div class="card flex-row">
+                @* Green *@
+                <div class="card-header card-image-container w-20">
+                    @* Blue *@
+                    <img src="~/images/@cand.ImageURL" class="card-img h-100" />
+                </div>
+
+                @* Body *@
+                <div class="card-body w-40">
+                    <h5 class="card-title">@cand.Name</h5>
+                    <p class="card-text">Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate Short description of the candidate</p>
+                </div>
+
+                @* Footer *@
+                @* If Voting *@
+                <div class="card-footer d-flex align-self-end bg-white border-0">
+                    <button type="submit" class="btn-primary">Vote</button>
+                </div>
+
+
+            </div>
+        }
+    </div>
+    @*</div>*@
 }
