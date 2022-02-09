@@ -23,11 +23,8 @@ namespace Elections.Models
 
             int nbOfVoters = 0;
 
-            //1-Calculate Number of Voters
-            foreach(var list in ElectoralLists)
-            {
-                nbOfVoters += list.NbOfVotes;
-            }
+            //1-Calculate initial Total Number of Voters
+            nbOfVoters = ElectoralLists.Sum(el => el.NbOfVotes);
 
             //STEP 1 - Filter the winning lists
 
@@ -35,28 +32,34 @@ namespace Elections.Models
             int EQ = nbOfVoters / nbOfSeats;
 
             //3-Eliminate the lists that didn't reach the first EQ
-
             List<ElectoralList> EligibleElectoralLists = new List<ElectoralList>();
-
-            ////Dict that will hold the remainder for each list
-            //Dictionary<int, int> remainders = new Dictionary<int, int>();
 
             EligibleElectoralLists = ElectoralLists.Where(el => el.NbOfVotes < EQ).ToList();
 
-            //trying a fast method to calc new nb of voters
+            //Calculate new nb of voters
             nbOfVoters = EligibleElectoralLists.Sum(el => el.NbOfVotes);
 
+            //Fix the status of the lists in the original list of elec lists
             foreach(var list in ElectoralLists)
             {
-                //By Default all lists are winners, until they don't pass the first EQ check
+                //By Default all lists are winners, until they don't pass the first EQ check 
                 list.Status = Status.Winner;
+
+                if(list.NbOfVotes < EQ)
+                {
+                    list.Status = Status.Loser;
+                }
             }
 
+            //STEP 2 - Distribute the seats among the winning lists
             //Here we have a fresh NbOfVoters = TotalNbOfVoters - NbOfVotersOfLosingLists
 
             //4-Calculate the second EQ
 
             EQ = nbOfVoters / nbOfSeats;
+
+            //5-NbOfVoters/EQ => NbOfSeats of each list
+
 
 
 
