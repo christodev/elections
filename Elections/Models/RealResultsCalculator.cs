@@ -29,35 +29,48 @@ namespace Elections.Models
                 nbOfVoters += list.NbOfVotes;
             }
 
-            //2-Calculate the first EQ (Electoral Quotient - الحاصل الانتخابي)
-            int firstEQ = nbOfVoters / nbOfSeats;
+            //STEP 1 - Filter the winning lists
 
-            //3-Eliminate the lists that don't have the
+            //2-Calculate the first EQ (Electoral Quotient - الحاصل الانتخابي) -- it will decide which lists continue to the next step
+            int EQ = nbOfVoters / nbOfSeats;
 
-            //Dict that will hold the remainder for each list
-            Dictionary<int, int> remainders = new Dictionary<int, int>();
+            //3-Eliminate the lists that didn't reach the first EQ
+
+            List<ElectoralList> EligibleElectoralLists = new List<ElectoralList>();
+
+            ////Dict that will hold the remainder for each list
+            //Dictionary<int, int> remainders = new Dictionary<int, int>();
+
+            EligibleElectoralLists = ElectoralLists.Where(el => el.NbOfVotes < EQ).ToList();
+
+            //trying a fast method to calc new nb of voters
+
             foreach(var list in ElectoralLists)
             {
-                //By Default all lists are losers, until they pass the first EQ check
-                list.Status = Status.Loser;
+                //By Default all lists are winners, until they don't pass the first EQ check
+                list.Status = Status.Winner;
 
-                //Check which lists have seats
-                if(list.NbOfVotes >= firstEQ)
+                //Check which lists don't have seats
+                if(list.NbOfVotes < EQ)
                 {
-                    list.Status = Status.Winner;
+                    //Set the status to Loser
+                    list.Status = Status.Loser;
 
-                    //Calculate the preliminary number of seats that the list will get
-                    list.NumberOfSeats = (int)Math.Floor((double)list.NbOfVotes / firstEQ);
+                    //Remove it from the winners list
+                    ElectoralLists.Remove(list);
 
-                    //Calculate its remainder
-                    remainders.Add(list.Id, list.NbOfVotes % firstEQ);
+                    //Remove their votes from the NbOfVoters
+                    nbOfVoters -= list.NbOfVotes;
                 }
             }
 
-            foreach(var list in ElectoralLists)
-            {
-                remainders.OrderByDescending
-            }
+            //Here we have a fresh NbOfVoters = TotalNbOfVoters - NbOfVotersOfLosingLists
+
+            //4-Calculate the second EQ
+
+            EQ = nbOfVoters / nbOfSeats;
+
+
 
             //Choose the Winners (According to the highest pref votes)
 
