@@ -17,9 +17,9 @@ namespace Elections.Models
 
         public void CalculateResults()
         {
+            //int nbOfEligibleVoters = 134736;
 
-            //Assume 3adad l nekhbin houwe 220000
-            int nbOfEligibleVoters = 220000;
+            int nbOfSeats = 8;
 
             int nbOfVoters = 0;
 
@@ -29,21 +29,34 @@ namespace Elections.Models
                 nbOfVoters += list.NbOfVotes;
             }
 
-            //2-Calculate the EQ (Electoral Quotient - الحاصل الانتخابي)
-            int EQ = nbOfVoters / nbOfEligibleVoters;
+            //2-Calculate the first EQ (Electoral Quotient - الحاصل الانتخابي)
+            int firstEQ = nbOfVoters / nbOfSeats;
 
-            //3-Calculate the first number of seats for each list
+            //3-Eliminate the lists that don't have the
+
+            //Dict that will hold the remainder for each list
             Dictionary<int, int> remainders = new Dictionary<int, int>();
             foreach(var list in ElectoralLists)
             {
-                list.NumberOfSeats = (int)Math.Floor((double)list.NbOfVotes / EQ);
-                remainders.Add(list.Id, list.NbOfVotes % EQ);
-            }
+                //By Default all lists are losers, until they pass the first EQ check
+                list.Status = Status.Loser;
 
+                //Check which lists have seats
+                if(list.NbOfVotes >= firstEQ)
+                {
+                    list.Status = Status.Winner;
+
+                    //Calculate the preliminary number of seats that the list will get
+                    list.NumberOfSeats = (int)Math.Floor((double)list.NbOfVotes / firstEQ);
+
+                    //Calculate its remainder
+                    remainders.Add(list.Id, list.NbOfVotes % firstEQ);
+                }
+            }
 
             foreach(var list in ElectoralLists)
             {
-                //Chouf ba2iyet l ma2e3id hasab l ksourat
+                remainders.OrderByDescending
             }
 
             //Choose the Winners (According to the highest pref votes)

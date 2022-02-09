@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{436B3C70-1F51-4F83-A6A4-96E0A8E0C0C4}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Models/RealResultsCalculator.cs">
     <Files>
-      <File FileName="Models/RealResultsCalculator.cs" Line="41" Column="48" />
+      <File FileName="Models/RealResultsCalculator.cs" Line="24" Column="32" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
