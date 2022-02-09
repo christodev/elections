@@ -55,17 +55,30 @@ namespace Elections.Models
             //Here we have a fresh NbOfVoters = TotalNbOfVoters - NbOfVotersOfLosingLists
 
             //4-Calculate the second EQ
-
             EQ = nbOfVoters / nbOfSeats;
 
             //5-NbOfVoters/EQ => NbOfSeats of each list
+            EligibleElectoralLists.ForEach(el => el.NumberOfSeats = (int)Math.Floor((double)el.NbOfVotes / (double)EQ));
 
+            //END OF WORK WITH LISTS
 
+            //START OF WORK WITH CANDIDATES
 
+            //Create a list of the Eligible Candidates
+            List<Candidate> EligibleCandidates = (List<Candidate>)EligibleElectoralLists.SelectMany<ElectoralList, Candidate>(el => el.Candidates);
 
-            //Choose the Winners (According to the highest pref votes)
+            //Sort them according to the proportion (DESC)
+            EligibleCandidates.OrderByDescending<Candidate, int>(c => c.NbOfVotes/EQ);
 
-            //Calculate Results
+            //Choose the Winners (According to the highest pref votes) (Neglect the Religions and the small regions)
+            EligibleCandidates.ForEach(c =>
+            {
+                if (c.ElectoralList.NumberOfSeats > 0)
+                {
+                    c.Status = Status.Winner;
+                    c.ElectoralList.NumberOfSeats--;
+                }
+            });
         }
 
         public void OnDeadlineReached_CalculateResults()

@@ -112,6 +112,12 @@ namespace Elections.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Candidates_Vote(ElectoralList list)
+        {
+            return View(list);
+        }
+
 
         [HttpPost("Vote")]
         public IActionResult Increment_Votes([FromForm(Name = "name")] string electoralListName)
@@ -127,7 +133,7 @@ namespace Elections.Controllers
 
             return IncrementVotes_View  (electoralListName);
             //return Ok(list);
-        }
+        } 
 
 
         //Action to Display Election Results

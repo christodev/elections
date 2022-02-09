@@ -8,7 +8,7 @@ namespace Elections.Models
     public class Candidate: Contestant
     {
 
-        public string Status { get; set; }
+        public Status Status { get; set; }
         public string ImageURL { get; set; }
 
         public string Description { get; set; }
