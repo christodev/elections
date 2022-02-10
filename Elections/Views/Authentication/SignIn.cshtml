@@ -1,12 +1,53 @@
 ﻿@model User
 
+
+<style>
+    .signin-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+
+    label {
+        margin-top: 1rem;
+        width: 20rem;
+    }
+
+    button {
+        border-radius: 6px;
+        padding: 0.2rem 0.8rem;
+        font-size: 18px;
+        border: none;
+        box-shadow: 0px 0px 5px black;
+        margin-bottom: 1rem;
+
+    }
+
+    input{
+        outline: none;
+        border: none;
+        border: 1px solid rgba(0,0,0,0.5);
+        border-radius: 6px;
+        width: 20rem;
+        padding: 0.2rem 1rem;
+        font-size: 17px;
+    }
+
+    h1 {
+        margin-left: 20px;
+    }
+
+</style>
+
 @{
     <h1>Sign In</h1>
 
-    //C#
     var ReturnUrl = Context.Request.Query["ReturnUrl"];
-    //End C#
-    <form method="post" asp-action="SignIn" asp-route-ReturnUrl=@ReturnUrl>
+
+    <form method="post" asp-action="SignIn" asp-route-ReturnUrl=@ReturnUrl class="signin-form">
 
         <label asp-for="Email">Email:</label>
         <input type="text" id="Email" asp-for="Email" />
@@ -18,8 +59,8 @@
 
         <p class="text-danger">@ViewData["Error"]</p>
 
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn-primary" >Sign In</button>
 
         <p>Don't have an account, <a asp-action="SignUp">Create one</a> here!</p>
     </form>
-}
+    }

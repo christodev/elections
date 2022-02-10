@@ -2,13 +2,61 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model ElectoralList 
+<style>
+
+    .sub-container {
+        /*border: 4px solid black;*/
+    }
+
+    .cards-container {
+        /*border: 2px solid red;*/
+        row-gap: 1rem;
+        height: 30%;
+    }
+
+    .card {
+        /*border: 2px solid green;*/
+        /*height: 100%;
+        width: 100%;*/
+    }
+
+    .card-image-container {
+        /* border: 2px solid blue;*/
+        height: auto;
+        width: 40%;
+    }
+
+    .card-img { /*OK LAL IMAGE*/
+        /*        height: 100%;
+        width: 100%;*/
+    }
+
+    .card-title {
+        font-weight: bold;
+    }
+
+    img {
+        height: 50%;
+        width: 50%;
+    }
+
+    button {
+        border-radius: 6px;
+        padding: 0.2rem 0.8rem;
+        font-size: 18px;
+        border: none;
+        margin-bottom: 1rem;
+        cursor: pointer;
+    }
+</style>
+
+@model ElectoralList
 
 @{
     <div class="d-flex">
         <h4 class="flex-shrink-1" style="margin-left:10px;">@Model.Name</h4>
     </div>
-    <div class="cards-container">
+    <div class="cards-container d-flex flex-column">
         @* Red *@
         @foreach (var cand in Model.Candidates)
         {
@@ -28,11 +76,11 @@
 
                 @* Footer *@
                 @* If Voting *@
-                <form>
+                <form asp-action="CandidatesVote" method="post" class="d-flex me-0">
                     <div class="card-footer d-flex align-self-end bg-white border-0">
                         <input type="text" hidden name="candId" value="@cand.Id" />
                         <input type="text" hidden name="listId" value="@Model.Id" />
-                        <button type="submit" asp-action="CandidatesVote" formmethod="post" class="btn-primary">Vote</button>
+                        <button type="submit" class="btn-primary">Vote</button>
                     </div>
                 </form>
 

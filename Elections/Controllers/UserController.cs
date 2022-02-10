@@ -1,6 +1,6 @@
 ﻿using Elections.Models;
 using Elections.Repositories;
-using Elections.Models.VotingTimeObserverPattern;
+using Elections.Models.ObserverPattern;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Elections.ConstantValues;
 
 namespace Elections.Controllers
 {
@@ -18,15 +19,13 @@ namespace Elections.Controllers
     {
         private IPoliticalPartyRepository politicalPartyRepository;
         private IElectoralListRepository electoralListRepository;
-        //private IUserRepository userRepository;
+        private IUserRepository userRepository;
 
         //Subject that will Notify the ResultsCalculator (observer) when voting is closed
         VotingPermission votingPermission = new VotingPermission();
 
         //Observer, when notified will calculate the results and return them to be displayed
         IResultsCalculator resultsCalculator;
-
-        readonly DateTime DEADLINE = new DateTime(2022, 2, 11, 15, 14, 00);
         
         public UserController(IPoliticalPartyRepository _politicalPartyRepository,
             IElectoralListRepository _electoralListRepository,
@@ -34,7 +33,7 @@ namespace Elections.Controllers
         {
             politicalPartyRepository = _politicalPartyRepository;
             electoralListRepository = _electoralListRepository;
-            //userRepository = _userRepository;
+            userRepository = _userRepository;
 
             //Let Results Calc keep Watching for Elections Deadline
             votingPermission.Subscribe(resultsCalculator);
@@ -42,7 +41,7 @@ namespace Elections.Controllers
             //Check if Voting Closed, Display Results
             //Check if Voting Deadline has been reached
             //If yes
-            if (DateTime.Now > DEADLINE)
+            if (DateTime.Now > Constants.DEADLINE)
             {
                 //Notify Calculator to start Calculating (Internal Notification in the Setter)
                 votingPermission.VotingIsOpen = false;
@@ -79,10 +78,11 @@ namespace Elections.Controllers
             return View(politicalParty);
         }
 
-        
+
         //Action used to Show the Full Electoral List
+        //To be [HttpGet("Vote")]
         [HttpGet("ListsVote")]
-        public IActionResult ListsVote_View(int listId)
+        public IActionResult ListsVote_View(int? listId)
         {
             //Show Results if Deadline reached
             if (!votingPermission.VotingIsOpen)
@@ -102,8 +102,8 @@ namespace Elections.Controllers
                 if (listId != null)
                 {
                     //Show the user he Casted his Vote successfully via label and Disable button for all Lists
-                    var tempList = electoralListRepository.GetElectoralLists().SingleOrDefault(el => el.Id == listId);
-                    ViewData["VotingResult"] = $"Successfully voted to {tempList.Name}";
+                    var tempList = electoralListRepository.GetElectoralListById(listId.Value);
+                    ViewData["VotingResult"] = $"You have successfully voted to {tempList.Name}. You cannot Vote anymore!";
                 }
 
                 //ReDisplay the View with all the Lists
@@ -118,13 +118,19 @@ namespace Elections.Controllers
 
 
         [HttpPost("ListsVote")]
-        public IActionResult ListsVote([FromForm(Name = "name")] string electoralListName)
+        public IActionResult ListsVote([FromForm(Name = "listId")] int listId)
         {
-            //Get the electoral list that the user clicked on
-            var tempElectoralList = electoralListRepository.GetElectoralLists().SingleOrDefault(el => el.Name == electoralListName);
 
+            //Show Results if Deadline reached
+            //Prevent User from Voting
+            if (!votingPermission.VotingIsOpen)
+                return RedirectToAction("Results");
+
+            //Get the electoral list that the user clicked on
+            ElectoralList tempList = electoralListRepository.GetElectoralListById(listId);
+            
             //Display Candidates Voting List
-            return View("CandidatesVote", tempElectoralList);
+            return View("CandidatesVote", tempList);
 
             #region Old
             ////Increase Nb of Votes
@@ -141,11 +147,24 @@ namespace Elections.Controllers
             #endregion 
         }
 
+        //[HttpGet("CandidatesVote")]
+        //public IActionResult CandidatesVote(ElectoralList list)
+        //{
+        //    return View(list);
+        //}
+
         //Run when user Votes for a Candidate
         [HttpPost("CandidatesVote")]
         public IActionResult CandidatesVote(int listId, int candId)
         {
+            //Increment the Votes of the List and the Candidate
             electoralListRepository.IncrementVotes(listId, candId);
+
+            //Disallow User from Voting Again
+            userRepository.DisableVoting(SignedInUser.Instance.UserName);
+
+            //Update User Singleton (No Full User with Credentials Exposure)
+            SignedInUser.Instance.DisableVoting();
 
             return ListsVote_View(listId);
         }

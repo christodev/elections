@@ -52,9 +52,9 @@ namespace Elections.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 //If Username taken exception thrown => Display Error
-                catch(FailedToSignInException)
+                catch(FailedToSignInException ex)
                 {
-                    ViewData["Error"] = "Username is already taken!";
+                    ViewData["Error"] = ex.Message;
                     return View();
                 }
                 catch(Exception ex)

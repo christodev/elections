@@ -85,6 +85,16 @@ namespace Elections.Repositories
             };
         }
 
+        public ElectoralList GetElectoralListById(int listId)
+        {
+            return ElectoralLists.SingleOrDefault(el => el.Id == listId);
+        }
+
+        public ElectoralList GetElectoralListByName(string listName)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<ElectoralList> GetElectoralLists()
         { 
 
@@ -93,15 +103,13 @@ namespace Elections.Repositories
 
         public void IncrementVotes(int listId, int candId)
         {
-            var tempList = ElectoralLists.SingleOrDefault(el => el.Id == listId);
+            var tempList = GetElectoralListById(listId);
 
             tempList.NbOfVotes++;
 
             var tempCand = tempList.Candidates.SingleOrDefault(c => c.Id == candId);
 
             tempCand.NbOfVotes++;
-
-            tempCand.ElectoralList.NbOfVotes++;
         }
     }
 }

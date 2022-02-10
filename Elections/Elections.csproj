@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -11,17 +11,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.9" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Models\UserCommandPattern\" />
-    <None Remove="Models\VotingTimeObserverPattern\" />
-  </ItemGroup>
+  
   <ItemGroup>
     <None Include="wwwroot\images\taqaddom.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\UserCommandPattern\" />
-    <Folder Include="Models\VotingTimeObserverPattern\" />
+    <Folder Include="Models\ObserverPattern\" />
   </ItemGroup>
 </Project>

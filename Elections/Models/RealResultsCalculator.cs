@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Elections.Models.VotingTimeObserverPattern;
+using Elections.Models.ObserverPattern;
 
 namespace Elections.Models
 {

@@ -3,8 +3,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Elections.ConstantValues;
 
-namespace Elections.Models.VotingTimeObserverPattern
+namespace Elections.Models.ObserverPattern
 {
     public class ProxyResultsCalculator: IResultsCalculator
     {
@@ -36,10 +37,8 @@ namespace Elections.Models.VotingTimeObserverPattern
                     realResultsCalculator = new RealResultsCalculator(ElectoralLists);
 
                 //Check if Voting Deadline has been reached
-                DateTime DEADLINE = new DateTime(2022, 2, 7, 15, 14, 00);
-
                 //If no => exit
-                if (DateTime.Now < DEADLINE)
+                if (DateTime.Now < Constants.DEADLINE)
                 {
                     //Notify Calculator to start Calculating
                     throw new Exception("Deadline not reached yet");

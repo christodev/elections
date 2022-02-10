@@ -1,5 +1,5 @@
 ﻿using System;
-using Elections.Models.VotingTimeObserverPattern;
+using Elections.Models.ObserverPattern;
 
 namespace Elections.Models
 {

@@ -29,23 +29,29 @@ namespace Elections.Repositories
         public User AddIfNewUser(User user)
         {
             //Verify if UserName or Email is already taken
-            var alreadyExistingUser = UsersList.Values.Any(u => u.UserName == user.UserName || u.Email == u.Email);
+            var alreadyExistingUser = UsersList.Values.Any(u => u.UserName == user.UserName);
 
             //If no user exists with such Username
             if(alreadyExistingUser != true)
             {
-                //Compute index where to add user
-                int indexOfNewUser = UsersList.Count;
+                //Check if Email is taken
+                if(!UsersList.Values.Any(u => u.Email == user.Email))
+                {
+                    //Compute index where to add user
+                    int indexOfNewUser = UsersList.Count;
 
-                //Add the User
-                UsersList.Add(indexOfNewUser, user);
+                    //Add the User
+                    UsersList.Add(indexOfNewUser, user);
 
-                //Return the User
-                return user;
+                    //Return the User
+                    return user;
+                }
+                throw new FailedToSignInException("Email is already taken");
             }
 
-            //else if user already exists
+            //else if username already exists
             throw new FailedToSignInException("Username is already taken");
+            
         }
 
         public void DisableVoting(string username)

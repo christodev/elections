@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Elections.Models.VotingTimeObserverPattern
+namespace Elections.Models.ObserverPattern
 {
     public interface IObserver
     {

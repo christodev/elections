@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Elections.Models.VotingTimeObserverPattern
+namespace Elections.Models.ObserverPattern
 {
     //Instead of the Controller
     public class VotingPermission: ISubject

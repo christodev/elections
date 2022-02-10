@@ -1,5 +1,5 @@
 ﻿using Elections.Models;
-using Elections.Models.VotingTimeObserverPattern;
+using Elections.Models.ObserverPattern;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

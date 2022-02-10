@@ -2,21 +2,48 @@
 
 @*<h1>Here you will Cast your Vote for one of the Electoral Lists</h1>*@
 
+<style>
+    button {
+        border-radius: 6px;
+        padding: 0.2rem 0.8rem;
+        font-size: 18px;
+        border: none;
+        margin-bottom: 1rem;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        cursor: default;
+    }
+    
+</style>
+
 <h1>@ViewData["VotingResult"]</h1>
 
-<div class="elec-lists-cards-container">
+<div class="elec-lists-cards-container d-flex flex-row justify-content-between">
 
     @foreach (var list in Model)
     {
-        <div class="card" style="width: 18rem; display: inline-block">
+        <div class="card p-2 shadow" style="width: 18rem; display: inline-block; border-radius:15px;">
             <img class="card-img-top" src="~/images/electoral-roll.png" asp-append-version="true">
             <div class="card-body">
-                <h5 class="card-title">@list.Name</h5>
-                <form asp-action="ListsVote" method="post">
-                    <input type="text" hidden name="name" value="@list.Name" />
-                    <button class="btn btn-info" @ViewData["disabled"]>Vote</button>
-                </form>
-                <h5 class="card-text">@list.NbOfVotes</h5>
+                <h5 class="card-title text-center">@list.Name</h5>
+                    @{
+                        string disabled = ViewData["disabled"] as string;
+                        if (!disabled.Equals("disabled"))
+                        {
+                            <form asp-action="ListsVote" method="post" class="d-flex justify-content-center align-items-center">
+                                <input type="text" hidden name="listId" value="@list.Id" />
+                                <button class="btn btn-primary">Vote</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="d-flex justify-content-center align-items-center" data-bs-toggle="tooltip" data-bs-placement="top" title="You have already voted, you cannot vote anymore.">
+                                <button class="btn" disabled>Vote</button>
+                            </div>
+                        }
+                    }
             </div>
         </div>
     }
