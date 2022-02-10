@@ -80,7 +80,11 @@ namespace Elections.Models
                     c.Status = Status.Winner;
                     c.ElectoralList.NumberOfSeats--;
                 }
+                else
+                    c.Status = Status.Loser;
             });
+
+
         }
 
         public void OnDeadlineReached_CalculateResults()

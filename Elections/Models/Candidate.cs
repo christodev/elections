@@ -17,7 +17,7 @@ namespace Elections.Models
 
         public Candidate()
         {
-
+            this.Status = Status.Loser;
         }
 
         public Candidate(int id, string name, int nbOfVotes)
@@ -25,6 +25,7 @@ namespace Elections.Models
             Id = id;
             Name = name;
             NbOfVotes = nbOfVotes;
+            this.Status = Status.Loser;
         }
 
         public Candidate(int id, string name, int nbOfVotes, ElectoralList electoralList)
@@ -33,6 +34,7 @@ namespace Elections.Models
             Name = name;
             NbOfVotes = nbOfVotes;
             ElectoralList = electoralList;
+            this.Status = Status.Loser;
         }
 
         public Candidate(int id, string name, int nbOfVotes, string desc, string imageURL)
@@ -42,6 +44,7 @@ namespace Elections.Models
             NbOfVotes = nbOfVotes;
             Description = desc;
             ImageURL = imageURL;
+            this.Status = Status.Loser;
         }
 
         public Candidate(int id, string name, int nbOfVotes, string desc, string imageURL, ElectoralList electoralList)

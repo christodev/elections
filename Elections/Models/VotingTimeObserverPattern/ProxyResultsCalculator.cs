@@ -1,6 +1,7 @@
 ﻿using System;
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Elections.Models.VotingTimeObserverPattern
@@ -14,6 +15,16 @@ namespace Elections.Models.VotingTimeObserverPattern
         public ProxyResultsCalculator(List<ElectoralList> lists)
         {
             ElectoralLists = lists;
+
+            //List<Candidate> candidates = lists.SelectMany<ElectoralList, Candidate>(el => el.Candidates).ToList();
+
+            //candidates.ForEach(
+            //     c => {
+            //         foreach(var list in lists)
+            //         {
+
+            //         }
+            //})
         }
 
         public void CalculateResults()
@@ -37,9 +48,9 @@ namespace Elections.Models.VotingTimeObserverPattern
                 //If everything is alright, Calculate Results
                 realResultsCalculator.CalculateResults();
             }
-            catch
+            catch(Exception ex)
             {
-                return;
+                throw;
             }
         }
 
