@@ -11,6 +11,6 @@ namespace Elections.Repositories
     {
         List<ElectoralList> GetElectoralLists();
 
-        void IncrementVotes_ForList(string electoralListName);
+        void IncrementVotes(int listId, int candId);
     }
 }

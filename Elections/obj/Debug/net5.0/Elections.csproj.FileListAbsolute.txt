@@ -1076,11 +1076,9 @@ C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\Shared\_LoginStatusPartial.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\User\Candidates_Vote.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\User\Homepage.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\User\PoliticalParty.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\User\Results.cshtml.g.cs
-C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\User\Vote.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Elections.RazorTargetAssemblyInfo.cache
@@ -1089,3 +1087,5 @@ C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Elections.csproj.CopyComplete
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Elections.genruntimeconfig.cache
 C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Elections.csproj.AssemblyReference.cache
+C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\User\CandidatesVote.cshtml.g.cs
+C:\Users\toshiba\Desktop\Uni\OnlineCourses\DesignPatterns\Elections_v3\Elections\obj\Debug\net5.0\Razor\Views\User\ListsVote.cshtml.g.cs

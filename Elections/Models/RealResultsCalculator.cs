@@ -17,6 +17,7 @@ namespace Elections.Models
 
         public void CalculateResults()
         {
+            //Bekaa 2
             //int nbOfEligibleVoters = 134736;
 
             int blankVotes = 541;
@@ -79,10 +80,16 @@ namespace Elections.Models
                 {
                     c.Status = Status.Winner;
                     c.ElectoralList.NumberOfSeats--;
+                    nbOfSeats--;
                 }
                 else
                     c.Status = Status.Loser;
             });
+
+            if(nbOfSeats > 0)
+            {
+                //check l ksoura
+            }
 
 
         }

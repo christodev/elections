@@ -91,9 +91,17 @@ namespace Elections.Repositories
             return ElectoralLists;
         }
 
-        public void IncrementVotes_ForList(string electoralListName)
+        public void IncrementVotes(int listId, int candId)
         {
-            ElectoralLists.SingleOrDefault(el => el.Name == electoralListName).NbOfVotes++;
+            var tempList = ElectoralLists.SingleOrDefault(el => el.Id == listId);
+
+            tempList.NbOfVotes++;
+
+            var tempCand = tempList.Candidates.SingleOrDefault(c => c.Id == candId);
+
+            tempCand.NbOfVotes++;
+
+            tempCand.ElectoralList.NbOfVotes++;
         }
     }
 }

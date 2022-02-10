@@ -26,7 +26,7 @@ namespace Elections.Controllers
         //Observer, when notified will calculate the results and return them to be displayed
         IResultsCalculator resultsCalculator;
 
-        readonly DateTime DEADLINE = new DateTime(2022, 2, 8, 15, 14, 00);
+        readonly DateTime DEADLINE = new DateTime(2022, 2, 11, 15, 14, 00);
         
         public UserController(IPoliticalPartyRepository _politicalPartyRepository,
             IElectoralListRepository _electoralListRepository,
@@ -80,10 +80,11 @@ namespace Elections.Controllers
         }
 
         
-        //Action used to Increment the nb of Votes of an Electoral List
-        [HttpGet("Vote")]
-        public IActionResult IncrementVotes_View(string listName)
+        //Action used to Show the Full Electoral List
+        [HttpGet("ListsVote")]
+        public IActionResult ListsVote_View(int listId)
         {
+            //Show Results if Deadline reached
             if (!votingPermission.VotingIsOpen)
                 return RedirectToAction("Results");
 
@@ -98,40 +99,36 @@ namespace Elections.Controllers
                     ViewData["disabled"] = "disabled";
 
                 //If User has Voted and reloading the page
-                if (listName != null)
+                if (listId != null)
+                {
                     //Show the user he Casted his Vote successfully via label and Disable button for all Lists
-                    ViewData["VotingResult"] = $"Successfully voted to {listName}";
+                    var tempList = electoralListRepository.GetElectoralLists().SingleOrDefault(el => el.Id == listId);
+                    ViewData["VotingResult"] = $"Successfully voted to {tempList.Name}";
+                }
 
-                //ReDisplay the View
-                return View("Vote", els);
+                //ReDisplay the View with all the Lists
+                return View("ListsVote", els);
             }
             catch
             {
                 ViewData["VotingResult"] = "Unexpected Error Occured";
-                return View("Vote");
+                return View("ListsVote");
             }
         }
 
-        //[HttpGet]
-        //public IActionResult Candidates_Vote(ElectoralList list)
-        //{
-        //    return View(list);
-        //}
 
-
-        [HttpPost("Vote")]
-        public IActionResult Increment_Votes([FromForm(Name = "name")] string electoralListName)
+        [HttpPost("ListsVote")]
+        public IActionResult ListsVote([FromForm(Name = "name")] string electoralListName)
         {
-
             //Get the electoral list that the user clicked on
             var tempElectoralList = electoralListRepository.GetElectoralLists().SingleOrDefault(el => el.Name == electoralListName);
 
             //Display Candidates Voting List
-            return View("Candidates_Vote", tempElectoralList);
+            return View("CandidatesVote", tempElectoralList);
 
             #region Old
             ////Increase Nb of Votes
-            //electoralListRepository.IncrementVotes_ForList(electoralListName);
+            //electoralListRepository.IncrementVotes(electoralListName);
 
             ////Disallow User from Voting Again
             //userRepository.DisableVoting(SignedInUser.Instance.UserName);
@@ -139,9 +136,18 @@ namespace Elections.Controllers
             ////Update User Singleton (No Full User with Credentials Exposure)
             //SignedInUser.Instance.DisableVoting();
 
-            //return IncrementVotes_View  (electoralListName);
+            //return ListsVote_View  (electoralListName);
             ////return Ok(list);
             #endregion 
+        }
+
+        //Run when user Votes for a Candidate
+        [HttpPost("CandidatesVote")]
+        public IActionResult CandidatesVote(int listId, int candId)
+        {
+            electoralListRepository.IncrementVotes(listId, candId);
+
+            return ListsVote_View(listId);
         }
 
 
@@ -151,7 +157,7 @@ namespace Elections.Controllers
         public IActionResult Results()
         {
             if (votingPermission.VotingIsOpen)
-                return RedirectToAction("IncrementVotes_View", null);
+                return RedirectToAction("ListsVote_View", null);
             //Display Calculation
 
             var lists = electoralListRepository.GetElectoralLists();

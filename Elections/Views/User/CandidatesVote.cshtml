@@ -28,9 +28,13 @@
 
                 @* Footer *@
                 @* If Voting *@
-                <div class="card-footer d-flex align-self-end bg-white border-0">
-                    <button type="submit" class="btn-primary">Vote</button>
-                </div>
+                <form>
+                    <div class="card-footer d-flex align-self-end bg-white border-0">
+                        <input type="text" hidden name="candId" value="@cand.Id" />
+                        <input type="text" hidden name="listId" value="@Model.Id" />
+                        <button type="submit" asp-action="CandidatesVote" formmethod="post" class="btn-primary">Vote</button>
+                    </div>
+                </form>
 
 
             </div>

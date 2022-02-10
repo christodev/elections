@@ -2,38 +2,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model bool;
-
 <div class="text-center">
     <h1 class="display-4">Here we will change Lebanon!</h1>
-    @if(@Model == false)
-    {
-        <h1>Voting: Open</h1>
-    }
-    else
-    {
-        <h1>Voting: Closed</h1>
-    }
 </div>
-
-<script>
-
-    window.onload = function() {
-
-        /*Function to execute many times*/
-        setInterval(_ => {
-
-            //Keep checking for the value of ViewData["Message"]
-            if (`@Model` == true) {
-                DisplayAlert('Deadline Reached');
-            }
-
-        }, 1000);
-    };
-
-    function DisplayAlert(string)
-    {
-        alert(string);
-    }
-
-</script>
