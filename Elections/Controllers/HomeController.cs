@@ -25,7 +25,7 @@ namespace Elections.Controllers
             //_logger.LogInformation($"Hey I'm {test}");
             return View();
         }
-
+    
         public IActionResult Privacy()
         {
             return View();

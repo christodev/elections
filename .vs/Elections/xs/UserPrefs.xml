@@ -1,19 +1,20 @@
 ﻿<Properties StartupConfiguration="{69F6A9EC-144C-4DB7-909E-4F3CD04999BB}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Elections/Controllers/HomeController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Elections/Views/Home/Index.cshtml">
     <Files>
-      <File FileName="Elections/Controllers/HomeController.cs" Line="26" Column="41" />
-      <File FileName="Elections/Views/Home/Index.cshtml" Line="9" Column="12" />
+      <File FileName="Elections/Controllers/HomeController.cs" Line="28" Column="5" />
+      <File FileName="Elections/Views/Home/Index.cshtml" Line="15" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Elections" expanded="True">
             <Node name="Elections" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="HomeController.cs" selected="True" />
-              </Node>
-              <Node name="Models" expanded="True">
-                <Node name="VotingTimeObserverPattern" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="Home" expanded="True">
+                  <Node name="Index.cshtml" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
