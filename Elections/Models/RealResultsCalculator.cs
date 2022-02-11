@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Elections.Models.ObserverPattern;
+using Elections.Repositories;
 
 namespace Elections.Models
 {
@@ -9,25 +10,29 @@ namespace Elections.Models
     {
 
         private List<ElectoralList> ElectoralLists;
+        private List<Candidate> EligibleCandidates;
 
-        public RealResultsCalculator(List<ElectoralList> electoralLists)
+        private int nbOfSeats;
+
+        private IElectoralListRepository ElectoralListRepository;
+
+        public RealResultsCalculator(List<ElectoralList> electoralLists, IElectoralListRepository electoralListRepository)
+        //public RealResultsCalculator(List<ElectoralList> electoralLists)
         {
             ElectoralLists = electoralLists;
+            ElectoralListRepository = electoralListRepository;
         }
 
+        //public void CalculateResults()
         public void CalculateResults()
         {
-            //Bekaa 2
-            //int nbOfEligibleVoters = 134736;
+            nbOfSeats = 6;
 
             int blankVotes = 541;
-
-            int nbOfSeats = 6;
-
-            int nbOfVoters = 0;
+            //Bekaa 2
 
             //1-Calculate initial Total Number of Voters
-            nbOfVoters = blankVotes + ElectoralLists.Sum(el => el.NbOfVotes);
+            int nbOfVoters = blankVotes + ElectoralLists.Sum(el => el.NbOfVotes);
 
             //STEP 1 - Filter the winning lists
 
@@ -60,38 +65,81 @@ namespace Elections.Models
             //4-Calculate the second EQ
             EQ = nbOfVoters / nbOfSeats;
 
+            //Dictionary of ElectoralListIds-remainders of each elect list (if seats are left, after distribution)
+            Dictionary<int,double> listId_remainderDict = new Dictionary<int, double>();
+
             //5-NbOfVoters/EQ => NbOfSeats of each list
-            EligibleElectoralLists.ForEach(el => el.NumberOfSeats = (int)Math.Floor((double)el.NbOfVotes / (double)EQ));
+            EligibleElectoralLists.ForEach(el => 
+            {
+                el.NumberOfSeats = (int)Math.Floor((double)el.NbOfVotes / (double)EQ);
+                listId_remainderDict.Add(el.Id,(int)Math.Round((double)el.NbOfVotes % (double)EQ, 2));
+            }
+            );
+
+            //Sort the dictionary according to the remainder (DESC)
+            //listId_remainderDict.OrderByDescending(kvp => kvp.Value);
 
             //END OF WORK WITH LISTS
 
             //START OF WORK WITH CANDIDATES
 
             //Create a list of the Eligible Candidates
-            List<Candidate> EligibleCandidates = EligibleElectoralLists.SelectMany<ElectoralList, Candidate>(el => el.Candidates).ToList();
+            EligibleCandidates = EligibleElectoralLists.SelectMany<ElectoralList, Candidate>(el => el.Candidates).ToList();
 
             //Sort them according to the proportion (DESC)
             EligibleCandidates = EligibleCandidates.OrderByDescending<Candidate, double>(c => c.NbOfVotes/EQ).ToList();
 
             //Choose the Winners (According to the highest pref votes) (Neglect the Religions and the small regions)
-            EligibleCandidates.ForEach(c =>
+            List<Candidate> ToBeRemoved = new List<Candidate>();
+            //EligibleCandidates.ForEach(c =>
+            foreach(var c in EligibleCandidates)
             {
                 if (c.ElectoralList.NumberOfSeats > 0)
                 {
-                    c.Status = Status.Winner;
-                    c.ElectoralList.NumberOfSeats--;
-                    nbOfSeats--;
+                    this.ElectCandidate(c);
+                    ToBeRemoved.Add(c);
                 }
                 else
                     c.Status = Status.Loser;
-            });
+            }
+            ToBeRemoved.ForEach(c => EligibleCandidates.Remove(c));
+            ToBeRemoved.Clear();
 
-            if(nbOfSeats > 0)
+            //Check if there are still empty seats
+            while(nbOfSeats > 0)
             {
-                //check l ksoura
+                //Check the remainders of each list
+                foreach(var kvp in listId_remainderDict.OrderByDescending(kvp => kvp.Value))
+                {
+                    //Check if it can still win a seat
+                    var tempList = ElectoralListRepository.GetElectoralListById(kvp.Key);
+                    
+                    //EligibleCandidates.ForEach(c =>
+                    foreach(var c in EligibleCandidates)
+                    {
+                        if (c.ElectoralList == tempList)
+                        {
+                            //Assign Candidate to Winner Status, Reduce the number of seats left (from region and list)
+                            this.ElectCandidate(c);
+                            ToBeRemoved.Add(c);
+                            break;
+                        }
+                    }
+                    ToBeRemoved.ForEach(c => EligibleCandidates.Remove(c));
+                    ToBeRemoved.Clear();
+                    break;
+                }
             }
 
 
+        }
+
+        private void ElectCandidate(Candidate cand)
+        {
+            cand.Status = Status.Winner;
+            cand.ElectoralList.NumberOfSeats--;
+            nbOfSeats--;
+            //EligibleCandidates.Remove(cand);
         }
 
         public void OnDeadlineReached_CalculateResults()

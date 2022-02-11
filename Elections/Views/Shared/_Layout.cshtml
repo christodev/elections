@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Elections.ConstantValues; 
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,7 +27,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Homepage">Alternatives</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ListsVote">Vote!</a>
+                            @* If Deadline reached *@
+                            @if (DateTime.Now >= Constants.DEADLINE)
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Results">Results</a>
+                            }
+                            else{
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ListsVote">Vote!</a>
+                            }
                         </li>
                     </ul>
                 </div>

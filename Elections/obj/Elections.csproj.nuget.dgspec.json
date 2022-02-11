@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections_v3\\Elections\\Elections.csproj": {}
+    "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections\\Elections\\Elections.csproj": {}
   },
   "projects": {
-    "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections_v3\\Elections\\Elections.csproj": {
+    "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections\\Elections\\Elections.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections_v3\\Elections\\Elections.csproj",
+        "projectUniqueName": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections\\Elections\\Elections.csproj",
         "projectName": "Elections",
-        "projectPath": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections_v3\\Elections\\Elections.csproj",
+        "projectPath": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections\\Elections\\Elections.csproj",
         "packagesPath": "C:\\Users\\toshiba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections_v3\\Elections\\obj\\",
+        "outputPath": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections\\Elections\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\toshiba\\AppData\\Roaming\\NuGet\\NuGet.Config",

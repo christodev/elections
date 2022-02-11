@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EUxffbeqsJbNp3FX2KhfsxvBxRf72t0GFMLEdRYMasOcoZWj2dh6HNmemFxlY0LrVFjyGutezWXPLWu2QzYLrQ==",
+  "dgSpecHash": "RdjijvM1lT5nJT1NiVKdHOK9E8XTVAQEhHGijBzI4MFUFCfL3yt8pyXHEnt+wdMXUj5ab7MC4eVMJiC1JqQnLg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections_v3\\Elections\\Elections.csproj",
+  "projectFilePath": "C:\\Users\\toshiba\\Desktop\\Uni\\OnlineCourses\\DesignPatterns\\Elections\\Elections\\Elections.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\toshiba\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\5.0.9\\microsoft.aspnetcore.mvc.razor.extensions.5.0.9.nupkg.sha512",
     "C:\\Users\\toshiba\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\5.0.9\\microsoft.aspnetcore.mvc.razor.runtimecompilation.5.0.9.nupkg.sha512",

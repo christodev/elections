@@ -41,7 +41,7 @@ namespace Elections.Controllers
             //Check if Voting Closed, Display Results
             //Check if Voting Deadline has been reached
             //If yes
-            if (DateTime.Now > Constants.DEADLINE)
+            if (DateTime.Now >= Constants.DEADLINE)
             {
                 //Notify Calculator to start Calculating (Internal Notification in the Setter)
                 votingPermission.VotingIsOpen = false;
@@ -147,11 +147,12 @@ namespace Elections.Controllers
             #endregion 
         }
 
-        //[HttpGet("CandidatesVote")]
-        //public IActionResult CandidatesVote(ElectoralList list)
-        //{
-        //    return View(list);
-        //}
+        //This action is used when user refreshes listsvote view after voting, so he doesn't get 404
+        [HttpGet("CandidatesVote")]
+        public IActionResult CandidatesVote()
+        {
+            return ListsVote_View(null);
+        }
 
         //Run when user Votes for a Candidate
         [HttpPost("CandidatesVote")]
@@ -182,7 +183,7 @@ namespace Elections.Controllers
             var lists = electoralListRepository.GetElectoralLists();
 
             if (resultsCalculator == null)
-                resultsCalculator = new ProxyResultsCalculator(lists);
+                resultsCalculator = new ProxyResultsCalculator(lists, electoralListRepository);
 
             resultsCalculator.CalculateResults();
 

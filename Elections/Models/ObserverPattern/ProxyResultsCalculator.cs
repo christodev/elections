@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Elections.ConstantValues;
+using Elections.Repositories;
 
 namespace Elections.Models.ObserverPattern
 {
@@ -13,28 +14,22 @@ namespace Elections.Models.ObserverPattern
 
         List<ElectoralList> ElectoralLists;
 
-        public ProxyResultsCalculator(List<ElectoralList> lists)
+        private IElectoralListRepository ElectoralListRepository;
+
+        public ProxyResultsCalculator(List<ElectoralList> lists, IElectoralListRepository electoralListRepository)
         {
             ElectoralLists = lists;
-
-            //List<Candidate> candidates = lists.SelectMany<ElectoralList, Candidate>(el => el.Candidates).ToList();
-
-            //candidates.ForEach(
-            //     c => {
-            //         foreach(var list in lists)
-            //         {
-
-            //         }
-            //})
+            ElectoralListRepository = electoralListRepository;
         }
 
         public void CalculateResults()
         {
             try
             {
+                var tempList = ElectoralListRepository.GetElectoralListById(0);
                 //Check if realResultsCalculator instance is not null
                 if (realResultsCalculator == null)
-                    realResultsCalculator = new RealResultsCalculator(ElectoralLists);
+                    realResultsCalculator = new RealResultsCalculator(ElectoralLists, ElectoralListRepository);
 
                 //Check if Voting Deadline has been reached
                 //If no => exit
@@ -43,7 +38,7 @@ namespace Elections.Models.ObserverPattern
                     //Notify Calculator to start Calculating
                     throw new Exception("Deadline not reached yet");
                 }
-
+                    
                 //If everything is alright, Calculate Results
                 realResultsCalculator.CalculateResults();
             }

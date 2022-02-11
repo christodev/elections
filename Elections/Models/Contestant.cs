@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Elections.Models
 {
     public abstract class Contestant
