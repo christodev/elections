@@ -150,7 +150,7 @@ namespace Elections.Controllers
                                         new List<Claim>()
             {
                                                     new Claim("UserName", tempUser.UserName),
-                                                    new Claim(ClaimTypes.Email, tempUser.Email),
+                                                    //new Claim(ClaimTypes.Email, tempUser.Email),
                                                     new Claim(ClaimTypes.Role, "Voter")
             }, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -164,10 +164,10 @@ namespace Elections.Controllers
             //};
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                ClaimsPrincipal, new AuthenticationProperties()
-                {
-                    IsPersistent = false
-                });
+            ClaimsPrincipal, new AuthenticationProperties()
+            {
+                IsPersistent = false
+            });
         }
         #endregion
     }

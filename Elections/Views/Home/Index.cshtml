@@ -1,7 +1,75 @@
 ﻿@{
+    @using Elections.ConstantValues;
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    .timer-container {
+        display: flex;
+        column-gap: 1rem;
+        justify-content: center;
+        border: 1px solid red;
+        /*margin-top: 1rem;*/
+        padding: 1rem;
+    }
+
+    .date-row {
+        /*border: 1px solid red;*/
+        box-shadow: 0 0 5px gray;
+        border-radius: 10px;
+        padding: 1rem;
+    }
+
+    .time {
+        font-size: 4rem;
+    }
+</style>
+
 <div class="text-center">
-    <h1 class="display-4">Here we will change Lebanon!</h1>
+    <h1 class="display-3 mb-5">Here we will change Lebanon!</h1> 
+    <h2>Time left to vote:</h2>
+    <div class="timer-container">
+        @* DO NOT WRITE IN IT *@
+    </div>
 </div>
+
+<script>
+
+    function displayTimer() {
+        //Do some Calculations
+        const deadline = new Date(2022, 2, 10, 23, 08, 00);
+
+        const now = new Date();
+
+        let timeleft = deadline - now;
+
+        let temp = new Date(timeleft);
+
+        let countdown = `${temp.getDay()}:${temp.getHours()}:${temp.getMinutes()}:${temp.getSeconds()}`
+
+        //Display Timer
+        document.querySelector(".timer-container").innerHTML =
+            `<div class="date-row">
+                <h1>Days</h1>
+                <h1 class="time">${temp.getDay()}</h1>
+            </div>
+
+            <div class="date-row">
+                <h1>Hours</h1>
+                <h1 class="time">${temp.getHours()}</h1>
+            </div>
+
+            <div class="date-row">
+                <h1>Minutes</h1>
+                <h1 class="time">${temp.getMinutes()}</h1>
+            </div>
+
+            <div class="date-row">
+                <h1>Seconds</h1>
+                <h1 class="time">${temp.getSeconds()}</h1>
+            </div>`;
+    }
+
+
+    setInterval(displayTimer, 1000);
+</script>

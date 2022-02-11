@@ -15,7 +15,6 @@ namespace Elections.Repositories
 
         public MockElectoralListRepository()
         {
-
             //Creating List1
             ElectoralList list1 = new ElectoralList();
 
@@ -36,7 +35,6 @@ namespace Elections.Repositories
             cand5.ElectoralList = list1;
 
             //Creating List2
-
             ElectoralList list2 = new ElectoralList();
 
             Candidate cand6 = new Candidate(5, "Wael Abou Faour", 10677, desc, "male.png");
@@ -59,7 +57,6 @@ namespace Elections.Repositories
             cand11.ElectoralList = list2;
 
             //Creating List3
-
             ElectoralList list3 = new ElectoralList();
 
             Candidate cand12 = new Candidate(11, "Maguy Aoun", 847, desc, "female.png");
@@ -88,11 +85,6 @@ namespace Elections.Repositories
         public ElectoralList GetElectoralListById(int listId)
         {
             return ElectoralLists.SingleOrDefault(el => el.Id == listId);
-        }
-
-        public ElectoralList GetElectoralListByName(string listName)
-        {
-            throw new NotImplementedException();
         }
 
         public List<ElectoralList> GetElectoralLists()
