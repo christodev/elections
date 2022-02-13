@@ -8,7 +8,7 @@ using Elections.Repositories;
 
 namespace Elections.Models.ObserverPattern
 {
-    public class ProxyResultsCalculator: IResultsCalculator
+    public class ProxyResultsCalculator: IResultsCalculator, IObserver
     {
         private RealResultsCalculator realResultsCalculator;
 

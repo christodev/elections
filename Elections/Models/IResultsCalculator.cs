@@ -4,7 +4,7 @@ using Elections.Models.ObserverPattern;
 
 namespace Elections.Models
 {
-    public interface IResultsCalculator: IObserver
+    public interface IResultsCalculator
     {
         void CalculateResults();
     }

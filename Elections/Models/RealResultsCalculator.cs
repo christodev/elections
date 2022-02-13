@@ -141,10 +141,5 @@ namespace Elections.Models
             nbOfSeats--;
             //EligibleCandidates.Remove(cand);
         }
-
-        public void OnDeadlineReached_CalculateResults()
-        {
-            //Dummy method ta sakkit l interface
-        }
     }
 }

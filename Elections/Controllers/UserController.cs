@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Elections.ConstantValues;
@@ -25,8 +25,10 @@ namespace Elections.Controllers
         VotingPermission votingPermission = new VotingPermission();
 
         //Observer, when notified will calculate the results and return them to be displayed
-        IResultsCalculator resultsCalculator;
-        
+        //IResultsCalculator resultsCalculator;
+
+        ProxyResultsCalculator resultsCalculator;
+
         public UserController(IPoliticalPartyRepository _politicalPartyRepository,
             IElectoralListRepository _electoralListRepository,
             IUserRepository _userRepository)
@@ -50,6 +52,7 @@ namespace Elections.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Homepage()
         {
             try
@@ -68,6 +71,7 @@ namespace Elections.Controllers
 
 
         //Action used to View the details of a Political Party
+        [AllowAnonymous]
         [HttpGet("PoliticalParty%2F{identifier}")]
         public IActionResult PoliticalParty(string identifier)
         {
